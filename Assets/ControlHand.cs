@@ -1,6 +1,8 @@
 ﻿public class ControlHand : UnityEngine.MonoBehaviour
 {
     private UnityEngine.Gyroscope gyro;
+	private const float SPEED = 3.0f;
+	private UnityEngine.Vector3 lastA = UnityEngine.Vector3.zero;
 
     // Use this for initialization
     void Start()
@@ -12,7 +14,22 @@
     // Update is called once per frame
     void Update()
     {
-        transform.rotation = new UnityEngine.Quaternion(gyro.attitude.x, 0, gyro.attitude.y, 1);
-        UnityEngine.Debug.Log(gyro.attitude);
+		// Acceleration
+		var dir = UnityEngine.Vector3.zero;
+        dir.x = -UnityEngine.Input.acceleration.x;
+        dir.y = -UnityEngine.Input.acceleration.y;
+		dir.z = 0;
+		UnityEngine.Debug.Log(dir);
+
+        if(dir.sqrMagnitude > 1){
+            dir.Normalize();
+        }
+
+        dir *= UnityEngine.Time.deltaTime;
+
+        transform.Translate(dir * SPEED);
+
+		// gyro
+        transform.rotation = new UnityEngine.Quaternion(-gyro.attitude.x, 0, -gyro.attitude.y, 1);
     }
 }
