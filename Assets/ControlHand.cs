@@ -1,8 +1,7 @@
 ﻿public class ControlHand : UnityEngine.MonoBehaviour
 {
     private UnityEngine.Gyroscope gyro;
-	private const float SPEED = 3.0f;
-	private UnityEngine.Vector3 lastA = UnityEngine.Vector3.zero;
+	private const float SPEED = 7.0f;
 
     // Use this for initialization
     void Start()
